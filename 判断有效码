@@ -1,0 +1,43 @@
+/**
+ *十分制的地址是x.x.x.x的格式，四个x的取值范围是【0,255】，写出程序
+ * 检查输入的ip地址是否合法，true表示合法
+ */
+public class StringCheck{
+    private static boolean checkIpAdress(String ip) {
+        String[] str = ip.split("\\.");  //split函数，以"."为间隔将字符串分开
+        if (str.length != 4) {    //145.59.的情况，有小于四个有效数据的情况
+            return false;
+        }
+        for (int i = 0; i < str.length; i++) {
+            str[i] = str[i].trim();    //将空格省去
+            if (str.length == 0) {     //空格的情况，如果两个点之间是空格，返回错误
+                return false;
+            }
+        }
+        /**
+         * try catch语句处理45.34.87.988的情况，不是0-255的情况
+         */
+            try {
+                for (int i = 0; i < str.length; i++) {
+                    int data = Integer.valueOf(str[i]);   //将str转为整型
+                    if (data < 0 || data > 255) {
+                        return false;
+                    }
+                }
+            } catch (NumberFormatException err) {
+                return false;
+            }
+            return true;
+        }
+    public static void main(String[] args) {
+        String ip="127.8.0.1";
+        System.out.println(checkIpAdress(ip));//true
+        String ip1="12.546.4.5";
+        System.out.println(checkIpAdress(ip1));//false
+        String ip2="12.56.";
+        System.out.println(checkIpAdress(ip2));//false
+        String ip3="12.54g.75.90";
+        System.out.println(checkIpAdress(ip3));//false
+    }
+
+}
