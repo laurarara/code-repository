@@ -1,0 +1,128 @@
+/*
+1.数组开辟时，定义长度，如果存放元素过多，需要扩容
+2.增加删除元素，需要移动元素，所以创建数组类，将方法封装
+ */
+import java.util.*;
+import java.util.Arrays;
+/**
+ * 实现整形数组对象
+ */
+class ArrayList{
+    //用来存储元素
+    protected int[] array;
+    //用来记录元素的个数
+    protected int size=0;
+    //alt + Insert 构造函数
+    public ArrayList() {
+//         this.array = new int[10];
+//         this.size=0;
+         this(1);//调用其他的带一个int型参数的构造函数(下面是函数的具体实现)
+    }
+    //好处是用户可以自定义输入的数组大小
+    public ArrayList(int size) {
+        this.array = new int[size];
+        this.size=0;
+    }
+    //缩容 把内存空间缩小到有效元素个数的长度
+    public void trimToSzie(int[] array){
+        this.array=Arrays.copyOf(this.array,size);
+    }
+    //向尾部增加元素
+    public void add(int val){
+        //判断空间是否足够，不够或者够都要添加元素
+        if(this.size==this.array.length){
+            this.array=Arrays.copyOf(this.array,size*2);
+        }
+            this.array[this.size++]=val;
+       // array[array.length]=val;
+    }
+    //向指定位置增加元素
+    public void add(int index,int val){
+        if(index<0 || index>=size) {
+            //参数不合法，抛出异常
+            throw new IllegalArgumentException(index + "invalid");
+        }
+        //扩容数组
+        if(this.size==this.array.length){
+            this.array=Arrays.copyOf(this.array,size*2);
+        }
+        //移动元素
+            for (int i = size;i>index;i--) {
+                array[i] = array[i-1];
+            }
+            //给index号位置添加元素
+            this.array[index] = val;
+            this.size++;//更新元素个数
+        }
+
+        //删除index号元素的值
+        public void del(int index){
+            if(index<0 || index>=size) {
+                //参数不合法，抛出异常
+                throw new IllegalArgumentException(index + "invalid");
+            }
+            for(int i=index;i<this.size;i++){
+                this.array[i]=this.array[i+1];
+            }
+            this.size--;
+        }
+
+    //删除为val的元素
+    public void remove(int val){
+        if(size==0){
+            throw new IllegalArgumentException("invalid");
+        }
+        //在数组中利用for循环查找val
+        int index=-1;
+        for(int i=0;i<this.size;i++){
+           if(this.array[i]==val){
+               index=i;
+               break;
+           }
+       }
+       //不存在这个值的情况，index不会改变，直接返回
+       if(index==-1){
+            return;
+       }
+       //再将该值后边的数依次前移
+       for(int i=index;i<this.size-1;i++){
+            this.array[i]=this.array[i+1];
+       }
+       this.size--;
+    }
+
+    //将数组放在一个字符串里面的打印,因为这时的数组是数组对象
+    public String toString() {
+        String arr = new String();
+        for (int i = 0; i < this.size; i++) {
+            arr = arr + this.array[i] + " ";
+        }
+        return arr;
+    }
+    //另一种打印的方法
+    public void tooString() {
+      //  String arr = new String();
+        for (int i = 0; i < size; i++) {
+            System.out.print(array[i]+" ");
+        }
+    }
+}
+public class ArrayListTest {
+    public static void main(String[] args) {
+        Random rd = new Random();
+        ArrayList list = new ArrayList(8);
+        //产生0-10之间的随机数给数组
+        for (int i = 0; i < 11; i++) {
+            list.add(rd.nextInt(50));
+        }
+        //list.trimToSzie();
+        list.tooString();
+
+//        list.add(2,16);
+//        System.out.println(list.toString());
+//       list.remove(2);//删除值为2的元素
+//       System.out.println(list.toString());
+//       list.del(3);//删除索引为3的元素
+//       System.out.println(list.toString());
+    }
+}
