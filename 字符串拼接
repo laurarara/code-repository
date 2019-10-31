@@ -1,0 +1,48 @@
+/**
+ * ctrl+n搜索
+ */
+public class StringTest {
+    public static void main(String[] args) {
+        String str1="test";
+        String str2="ok";
+        /**拼接两个字符串，需要new一次StringBuilder对象，调用三次append方法
+         *因为new对象时默认为空
+         *StringBuilder sb = new StringBuilder();
+         * sb.append(str1);
+         * sb.append(" ");
+         * sb.append("ok");
+         * String str3 = sb.toString();   new String("xxxxxx");
+         */
+        String str3=str1+" "+str2;
+        System.out.println(str3);
+
+
+        StringBuilder s=new StringBuilder("test2");
+        s.append(" o");
+        s.append("k");
+        System.out.println(s.toString());//因为StringBuilder没有toString方法，需要new String来实现它的方法
+
+
+        String str = "hello";
+        for(int i=0; i<10; ++i){
+            /**
+             * StringBuilder sb = new StringBuilder();
+             * sb.append(str);
+             * sb.append(String.valueOf(i));
+             * str = sb.toString(); new String(xxx);
+             */
+            str = str + String.valueOf(i);
+        }
+        System.out.println(str);
+
+
+        String string = "hello";
+        StringBuilder sb = new StringBuilder(string);
+        for(int i=0; i<10000; ++i){
+            sb.append(String.valueOf(i));
+        }
+        string=sb.toString(); // new String(xxxx)
+        System.out.println(string);
+
+    }
+}
