@@ -1,0 +1,105 @@
+package com.load;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
+/**
+ * 验证类的加载
+ * 任何东西.的时候，后面都会有class;
+ * 2019/10/31
+ */
+public class ClassLoadTest {
+    public static void main(String[] args) throws Exception{
+       //第一种加载类的方式
+//        Class c1=Student.class;//获取类的Class对象
+//
+//        //第二种加载类的方式 forName()方法，里面参数是包名.类名
+        //Class c2=Class.forName("com.load.Student");//包路径
+        //通过反射生成Student对象
+        /**
+         * 通过Class类的newInstance只能默认构造一个对象（无参数会出现运行时异常）
+         * Student stu=new Student()
+         */
+         //Student s1=(Student)c2.newInstance();
+//        //想调用三个参数的构造
+//        Constructor con=c2.getConstructor(String.class,int.class,String.class);
+//        Student stu=(Student)con.newInstance("lauraa",20,"women");
+//        System.out.println(stu);
+//
+//        //生成对象，首先会加载类，会打印实例初始化块和构造函数
+//        Student s=new Student("laura",20,"woman");
+//        Class c3=s.getClass(); //通过访问类.class(第一步)
+//        System.out.println(c3.getClassLoader());//获取类加载器
+//        System.out.println(c3.getClassLoader().getParent());
+//        System.out.println(c3.getClassLoader().getParent().getParent());
+//        System.out.println(String.class.getClassLoader());
+
+         //Test t=new Test();//私有构造函数，不能new
+         Class c=Test.class;
+        //c.newInstance(); //运行异常：Class com.load.ClassLoadTest can not access a member of class com.load.Test with modifiers "private"
+//        Constructor c4=c.getDeclaredConstructor(int.class);//构造函数
+//        c4.setAccessible(true);
+//        c4.newInstance(6);
+
+          //访问私有方法
+          Test t1=new Test();
+          Method m=c.getDeclaredMethod("show",null);
+          m.setAccessible(true);
+          m.invoke(t1,null);
+          //访问私有成员变量并改变值
+         Field f=c.getDeclaredField("ma");
+         f.setAccessible(true);
+         f.set(t1,8);
+         m.invoke(t1,null);
+
+    }
+}
+class Test{
+    private int ma = 10;
+    public Test(){
+        System.out.println("测试类的私有构造");
+    }
+    private void show(){
+        System.out.println("ma:" + ma);
+    }
+
+}
+class Student{
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", sex='" + sex + '\'' +
+                '}';
+    }
+
+    private String name;
+    private int age;
+    private String sex;
+    private static String school=method01();
+    static {
+        System.out.println("类的静态初始化块！");
+        school="西安工业大学";
+    }
+    {
+        System.out.println("类的实例初始化块");
+    }
+
+    private static String method01() {
+        System.out.println("初始化类的静态成员变量！");
+        return "default";
+    }
+    public Student(){
+        System.out.println("默认构造");
+
+    }
+
+    public Student(String name,int age,String sex){
+        System.out.println("类的构造函数");
+        this.name=name;
+        this.age=age;
+        this.sex=sex;
+    }
+}
