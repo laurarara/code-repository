@@ -1,0 +1,41 @@
+import java.lang.reflect.Constructor;
+
+/**
+ *需求：设计单例类，只能访问这个类唯一的一个实例对象
+ */
+class Singleton{
+    //3.提供一个公有的函数接口，把唯一的obj对象进行返回(定义成静态方法，为了返回对象)
+    public static Singleton instance(){
+        //懒汉模式的改进，如果没有创建过，就创建；创建了就直接返回第一次创建好的对象
+        if(obj==null){
+            obj=new Singleton();
+        }
+        return obj;
+    }
+    //2.创建这个类型唯一的一个对象(自己的类，能访问自己私有的构造函数)
+    ///private static Singleton obj=new Singleton();  //饿汉模式
+    private static Singleton obj=null; //e饿汉模式
+    //1.构造函数私有化(应该由类的设计者提供对象，用户不能随意地new对象，每new一次就会产生一个对象)
+    private Singleton(){
+    }
+}
+public class SingletonTestCase {
+    public static void main(String[] args) throws Exception{
+         //  Singleton s1=new Singleton();构造函数私有化，所以不能new对象
+        Singleton s1=Singleton.instance();
+        Singleton s2=Singleton.instance();
+        Singleton s3=Singleton.instance();
+        //所以获取了三个相同的对象
+        System.out.println(s1==s2);//true
+        System.out.println(s1==s3);//true
+
+          //Singleton s=new Singleton();
+        //不安全，这种方式可以通过反射创建对象
+        Class s=Class.forName("Singleton");
+        Constructor c=s.getDeclaredConstructor();
+        c.setAccessible(true);
+        Singleton s4=(Singleton)c.newInstance();
+        System.out.println(s1==s4);//false
+
+    }
+}
