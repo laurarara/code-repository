@@ -1,0 +1,65 @@
+/**
+ * 定义一个Teacher类，name age sex三个属性，设计成单例类
+ * 不能通过反射生成新对象
+ * 注意，在Constructor的enum类型进行判断，不能通过反射创建枚举类型的对象
+ */
+enum Teacher{
+    TEACHER_OBJ("zhang san",20,"women");//构造函数带参数时需要在对象后传入参数属性
+    private String name;
+    private int age;
+    private String sex;
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    //枚举的构造默认也是private
+    Teacher(String name,int age,String sex) {
+        this.name = name;
+        this.age=age;
+        this.sex=sex;
+    }
+    Teacher(){
+
+    }
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", sex=" + sex+
+                '}';
+    }
+}
+public class Test {
+    public static void main(String[] args) {
+        Teacher t1=Teacher.TEACHER_OBJ;
+        System.out.println(t1);
+        t1.setAge(20);
+        t1.setName("laura");
+        t1.setSex("women");
+        System.out.print(t1.getSex()+" ");
+        System.out.print(t1.getName()+" ");
+        System.out.print(t1.getAge());
+    }
+}
