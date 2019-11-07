@@ -1,0 +1,79 @@
+import java.lang.annotation.*;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+
+/**
+ * 自定义注解类型   记录开发人员的  姓名String   开发日期String
+ * value这个参数名字，对于所有注解来说，比较特殊，例如：
+ * @DevelopInfo("张三") 就是把"张三"传给注解默认的参数名字了value
+ * 也可以把参数的名字写出来，如@DevelopInfo(value = "张三")
+ *
+ */
+@Target({ElementType.METHOD}) //Target限制修饰的类型，说明DevelopInfo只能修饰方法
+@Retention(RetentionPolicy.RUNTIME) // 说明DevelopInfo注解信息可以保留到运行的时候
+@interface DevelopInfo{ // 用来修饰类，方法，变量，方法参数...
+    String[] value() default "nobody"; // 注解的参数   参数名字叫 value
+    String date();
+}
+
+/**
+ * 新定义一个修饰方法的注解接口，可以保留到运行的时候
+ */
+@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@interface Check{
+    int value();
+}
+
+class CMath{
+    //@DevelopInfo(value = "张三", date = "2019-11-2")
+    @DevelopInfo(value = {"张三", "李四"}, date = "2019-11-2")
+    @Check(10)
+    int sum(int a, int b){
+        return a + b;
+    }
+
+    @DevelopInfo(value = {"高洋", "刘硕"}, date = "2019-10-2")
+    int minor(int a, int b){
+        return a - b;
+    }
+
+    @DevelopInfo(value = "张航", date = "2019-9-12")
+    int div(int a, int b){
+        return a / b;
+    }
+
+    @DevelopInfo(value = "吴雷", date = "2019-9-12")
+    int mix(int a, int b){
+        return a * b;
+    }
+}
+public class 注解 {
+    public static void main(String[] args) {
+        /**
+         * 通过Java反射，获取CMath这个类所有方法的注解开发信息
+         */
+        Class c = CMath.class;
+        /**
+         * 获取所有方法的method
+         * getField（public）   getDeclaredField(公有，私有，保护)
+         */
+        Method[] methods = c.getDeclaredMethods();
+        for (int i = 0; i < methods.length; i++) {
+            Annotation[] anns = methods[i].getDeclaredAnnotations();  //获取方法的注解
+            if(anns != null){
+                // 遍历fields[i]当前方法的所有注解
+                for (int j = 0; j < anns.length; j++) {
+                    if(anns[j] instanceof DevelopInfo){
+                        DevelopInfo di = (DevelopInfo)anns[j];
+                        System.out.println("方法名：" +
+                                methods[i].getName() +
+                                " 开发者:" + Arrays.toString(di.value()) +
+                                " 开发日期:" + di.date());
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
