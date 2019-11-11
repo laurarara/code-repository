@@ -20,7 +20,7 @@ public class FindString {
 
     private static String findMin(String[] arr) {
         String str4 = arr[0];
-        String str5 = arr[arr.length-1];
+        //String str5 = arr[arr.length-1];
         int min = str4.length();
         for (int i = 1; i < arr.length; i++) {
             if (arr[i].length() < min) {
@@ -28,7 +28,7 @@ public class FindString {
                 str4 = arr[i];
                 for (int j = i+1; j < arr.length; j++) {
                     if (arr[j].length() == arr[i].length()) {
-                        str5= arr[j];
+                        String str5= arr[j];
                         str4=str4+" "+str5;
                     }
                 }
@@ -36,10 +36,9 @@ public class FindString {
         }
         return str4+" ";
     }
-
     private static String findMax(String[] arr) {
         String str = arr[0];  //将数组的0号位定义为str长度最长的字符串，依次比较
-        String str6 = arr[arr.length - 1];
+        //String str6 = arr[arr.length - 1];
         //String[] strr = new String[arr.length];
         int max = str.length();
         for (int i = 1; i < arr.length; i++) {
@@ -48,13 +47,13 @@ public class FindString {
                 str = arr[i]; //并将该字符串赋给str
                 for (int j = i+1; j < arr.length; j++) { //如果有与这个字符串相同长度的
                     if (arr[j].length() == arr[i].length()) {
-                        str6 = arr[j];  //将这个字符串给新的str6,然后一起打印出来
+                        String str6 = arr[j];  //将这个字符串给新的str6,然后一起打印出来
                         str=str+"  "+str6;
                     }
                 }
             }
         }
-        return str + " ";//+str6;
+        return str + " ";
     }
 
 }
