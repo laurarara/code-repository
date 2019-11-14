@@ -77,6 +77,43 @@ class SingleLinekdListTakeHead<E> {
         }
         return false;
     }
+  //设置某个位置的值为newElement
+    public void set(int pos, E newElement){
+        if(pos <= 0 || pos > getLength()){
+            return;
+        }
+        //找pos位置的节点
+        Node<E> tmp = head.next;
+        for(int i=1; i < pos; i++){
+            tmp = tmp.next;
+        }
+        tmp.data = newElement;
+    }
+     //得到某个元素的值
+    public E get(E element){
+        Node<E> tmp = head.next;//从有效节点开始遍历
+
+        while(tmp != null){
+            if(tmp.data == element){
+                return tmp.data; //找到的话，返回该节点
+            }
+            tmp = tmp.next;
+        }
+        return null;
+    }
+//              自己写的 恶心心
+//            while (index++<getLength()){
+//            prev=prev.next;
+//            if(prev.data!=element){
+//                return null;
+//            }
+//            if(prev.next==null) {
+//               return false;
+//            }else
+//            {
+//                temp.next=prev.next;
+//            }
+//        }
 
     //返回长度
     public int getLength() {
@@ -114,15 +151,18 @@ public class Linked {
         list.addTail(4);
         System.out.println(list.toString());//8 5 3 1 2 4
 
-        list.addPos(2, 100);
+        list.addPos(2, 100); //在2 号位置加入元素100
         System.out.println(list.toString());
         list.addPos(0, 1000);
         System.out.println(list.toString());
-        //list.addPos(10, 10000);
-        //System.out.println(list.toString());
 
         list.remove(4);
-        System.out.println(list.toString());
+        System.out.println("删除值为4的元素:"+list.toString());
+
+        list.set(2,2);//true,把2号元素的值改为2
+        System.out.println("把2号元素的值改为2:"+list.toString());
+        System.out.println(list.get(3));
     }
 
 }
+   
