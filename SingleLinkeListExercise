@@ -1,0 +1,19 @@
+public class SingleLinkListExercise {
+    public static <E> void reversePrint(Node<E>  head){
+        if(head == null){
+            return;
+        }
+        //提取重复的逻辑
+        reversePrint(head.next);
+        System.out.println(head.data);
+    }
+    public static void main(String[] args) {
+        SingleLinkList<Integer> list = new SingleLinkList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        reversePrint(list.head);
+    }
+}
