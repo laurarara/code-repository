@@ -1,0 +1,93 @@
+一：开发人员写好的功能代码
+package Testtt;
+/**
+ * 描述: 开发人员写好的功能代码
+ *
+ * @Author shilei
+ */
+
+public class CMath {
+    public int sum(int a, int b){
+        return a + b;
+    }
+
+    public int minor(int a, int b){
+        return a - b;
+    }
+
+    public int div(int a, int b){
+        return a / b;
+    }
+
+    public int mix(int a, int b){
+        return a * b;
+    }
+}
+二：测试人员写的测试代码
+package Testt;
+import Testtt.CMath;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+/**
+ * 描述: 测试用例类,测试人员写的
+ * @Author hui
+ */
+public class TestCaseUnit {
+    @TestCase("CMath.sum")
+    public boolean testsum(){
+        CMath math = new CMath();
+        int ret = math.sum(10, 20);
+        return ret == 30;
+    }
+
+    @TestCase("CMath.minor")
+    public boolean testminor(){
+        CMath math = new CMath();
+        int ret = math.minor(10, 20);
+        return ret == -10;
+    }
+   @TestCase("Cmath.mix")
+   public boolean testmix(){
+       CMath math=new CMath();
+       int ret=math.mix(10,20);
+       return ret==100;
+   }
+}
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@interface TestCase{
+    String value();//存储测试的函数接口名称
+}
+三：测试的主类：
+package Testt;
+import java.lang.reflect.Method;
+/**
+ * 描述:主类进行测试
+ * @Author  hui
+ */
+public class Mainn {
+    public static void main(String[] args) throws Exception {
+        /**
+         * 编写代码，输出TestCaseUnit里面所有的测试用例结果
+         * CMath.sum  测试结果：成功！  失败！
+         */
+        Class<TestCaseUnit> c = TestCaseUnit.class;
+        Object obj = c.newInstance();
+        Method[] methods = c.getDeclaredMethods();
+        for (int i = 0; i < methods.length; i++) {
+            TestCase tc = methods[i].getDeclaredAnnotation(TestCase.class);
+            if (tc != null) {
+                System.out.print(tc.value() + " ");
+                System.out.print("测试结果:");
+                if ((boolean) methods[i].invoke(obj)) {
+                    System.out.println("成功！");
+                } else {
+                    System.out.println("失败！");
+                }
+            }
+        }
+    }
+}
