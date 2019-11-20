@@ -1,0 +1,54 @@
+/**在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照
+从上到下递增的顺序排序，请完成一个函数，输入这样一个二维数组和一个整数，
+ 2 5 7 8
+ 4 6 9 10
+ 5 8 10 15
+判断数组中是否含有该整数。
+*/
+public class FindNumber {
+    public static void main(String[] args) {
+        int[][] brray = {{2, 5, 7, 8}, {4, 6, 9, 10}, {5, 8, 10, 15}};
+        int[][] brray1 = {{2,5}, {4,6}, {5,8}};
+       System.out.println(find(brray, 10));
+       System.out.println(find(brray, 17));
+//        System.out.println(find(brray, 20));
+        System.out.println(find(brray1, 17));
+    }
+    //判断二维数组中是否有该元素
+    public static boolean find(int brray[][],int target){
+        //如果数组为空 返回错误
+        if(brray==null){
+            return false;
+        }
+         /**
+         * 以左下角为基准，这种情况不用判断只有一行的情况，因为一旦出现比左下角小的数，就会因为roe<0跳出while循环
+         */
+//        if(brray==null){
+//            return false;
+//        }
+//        int col=0;
+//        int row=brray.length-1;
+//        while (row>=0&&col<brray.length){
+//            if(target==brray[row][col]){
+//                return true;
+//            }else if(target>brray[row][col]){
+//                col++;
+//            }else {
+//                row--;
+//            }
+//        }
+        //通过右上角（8）的数据判断
+        int row=0; //行
+        int col=brray[0].length-1; //列的个数
+        while (row<brray.length&&col>=0){
+            if(target==brray[row][col]){
+                return true;
+            }else if(target>brray[row][col]){
+                row++;
+            }else{
+                col--;
+            }
+        }
+       return false;
+   }
+}
