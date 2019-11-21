@@ -1,0 +1,87 @@
+//双向链表的增加、删除
+class DoubleLinkList<E>{
+    protected Node<E> head;
+    protected Node<E> tail;
+     class Node<E> {
+        protected  E data;
+        protected Node<E> prev;
+        protected Node<E> next;
+        public Node(E data,Node<E> prev,Node<E> next){
+            this.data = data;
+            this.prev = prev;
+            this.next = next;
+        }
+    }
+    //尾插法
+    public void add(E data){
+         Node<E> last=tail;//把目前链表的最后一个节点给last
+         Node<E> newNode=new Node<>(data,last,null);//创建新节点的前驱是last,后继为null
+        if(last==null){
+            head=newNode;
+        }else {
+            tail.next=newNode;//让tail指向newNode
+        }
+        tail=newNode;//再把newNode赋给新的tail
+    }
+
+
+    public boolean remove(E data){
+         if (head==null){
+             return false;
+         }
+         //如果删除的是第一个节点
+         else if(head.data.equals(data)){
+             head=head.next;
+             head.prev=null;
+             return true;
+         }
+         //如果删除的是最后一个节点
+        else if(tail.data.equals(data)){
+             tail=tail.prev;
+             tail.next=null;
+             return true;
+        }else {
+            //如果删除的是正常节点
+            Node<E> prev = head;
+            Node<E> current = head.next;
+            while (current != null) {
+                if (current.data.equals(data)) {  //如果当前节点数据是要找的节点
+                    prev.next = current.next; //将前一个的节点的next指向当前节点的下一个
+                    current.next.prev = prev;//当前节点的下一个的前驱指向要删除节点的前一个
+                    current = null; //将要删除的节点置为null
+                    return true;
+                }
+                prev = current;//将两个节点继续向下走
+                current = current.next;
+            }
+        }
+        return false;
+    }
+    //打印链表
+    public void show(){
+        Node<E> current=head;//定义一个current变量，将head指向current
+        while (current.next!=null){
+            System.out.print(current.data+" ");
+            current= current.next;
+        }
+        System.out.print(current.data);
+        System.out.println();
+    }
+}
+public class DoubleLinkListTest {
+    public static void main(String[] args) {
+        DoubleLinkList<Integer> d=new DoubleLinkList<>();
+        d.add(3);
+        d.add(4);
+        d.add(5);
+        d.add(6);
+        d.add(7);
+        d.show(); //3 4 5 6 7
+
+        System.out.println(d.remove(3));
+        System.out.println(d.remove(5));
+        System.out.println(d.remove(7));
+        System.out.println(d.remove(10));
+        d.show();//4 6
+    }
+}
