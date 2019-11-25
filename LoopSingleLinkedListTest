@@ -1,0 +1,94 @@
+//不带头节点的单向循环链表
+class LoopSingleLinkedList<E>{
+
+    protected Node<E> head;
+
+    class Node<E>{
+        protected E data;
+        protected Node<E> next;
+
+        public Node(E data){
+            this.data = data;
+        }
+    }
+
+    public void add(E data){
+        Node<E> newNode=new Node<>(data);
+        //链表为空
+        if(head == null){
+            head = newNode;
+            newNode.next = head;
+        }
+        //遍历至尾节点
+        Node<E> tail = head;
+        while(tail.next != head){
+            tail = tail.next;
+        }
+        newNode.next = tail.next;
+        tail.next = newNode;
+    }
+//输出为data的数据
+    public boolean remove(E data){
+        //如果头结点为空，返回false
+        if (head == null) {
+            return false;
+        }
+        //这里需要判断，如果当前只有一个节点，则将链表置空，直接删除
+        if(head.next==head){
+            head=null;
+            return false;
+        }
+        //如果删除的是头结点，要先找到尾节点，让尾节点指向头结点的下一个
+        Node<E> tail=head;
+         if (tail.data == data) {
+            while (tail.next != head) {
+                tail=tail.next;
+            }
+            head=head.next;
+            tail.next=head;
+
+            return true;
+        }
+        //删除正常节点
+        Node<E> prev = head;//定义一个节点指向头
+        Node<E> current = head.next;//再定义要删除的结点指向下一个
+        while(current != head){
+            if(current.data == data){
+                prev.next = current.next;
+                current = null;
+                return true;
+            }
+            prev = current;
+            current = current.next;
+        }
+        return false;
+    }
+//从头结点开始遍历打印，需要定义一个索引指向头结点
+    public void show(){
+        Node<E> current=head;
+        while (current!=null&&current.next!=head){
+            System.out.print(current.data+" ");
+            current=current.next;
+        }
+        if(head==null){
+            System.out.println("链表空！");
+        }else {
+            System.out.println(current.data);
+        }
+
+    }
+}
+public class LoopSingleLinkedListTest {
+    public static void main(String[] args) {
+        LoopSingleLinkedList<Integer> l=new LoopSingleLinkedList();
+        l.add(3);
+        l.add(4);
+        l.add(5);
+        l.show();
+        l.remove(3);
+        System.out.println(l.remove(5));
+        l.remove(4);
+        l.show();
+
+    }
+}
