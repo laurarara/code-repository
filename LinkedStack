@@ -1,0 +1,66 @@
+//链式栈(top指向第一位无效的头结点)
+public class LinkedStack<E> {
+    Node<E> top;
+    //内部类
+    class Node<E> {
+        protected E data;
+        protected Node<E> next;
+
+        public Node(E data) {
+            this.data = data;
+        }
+    }
+    public LinkedStack() {
+        top = new Node(new Object());
+    }
+    //头插法
+    public void push(E val){
+        Node<E> newNode=new Node(val) ;//创建一个值为val的节点
+        newNode.next=top.next; //新插入节点的next指向原top指向的next
+        top.next=newNode;//再把top.next指向新节点
+    }
+    //获取栈顶元素并删除
+    public E remove(){
+        if(top.next==null){
+            throw new UnsupportedOperationException("the stack has been empty");
+        }
+        E result=top.next.data;
+        top.next=top.next.next;
+        return result;
+    }
+    public E peek(){
+        if(top.next==null){
+            throw new UnsupportedOperationException("the stack has been empty");
+        }
+        return top.next.data;
+    }
+
+    //从top节点的下一个开始遍历，不为空则一直的打印
+    public void show(){
+        Node<E> tmp=top.next;
+        while (tmp!=null){
+            System.out.print(tmp.data+" ");
+            tmp=tmp.next;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        LinkedStack<Integer> l=new LinkedStack();
+        l.push(3);
+        l.push(4);
+        l.push(5);
+        l.show();
+        System.out.println(l.peek());
+
+        l.remove();//删除5
+        l.show();
+        l.remove();//删除4
+        l.show();
+        l.remove();//删除3
+        l.show();
+
+
+    }
+
+}
