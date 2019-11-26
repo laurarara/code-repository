@@ -1,0 +1,87 @@
+import java.util.Arrays;
+import java.util.Stack;
+/**
+ * 顺序栈代码实现
+ */
+class SeqStack{
+    private int[] stack;// 存储栈元素的数组
+    private int top;// 标识栈顶的位置
+
+    // 默认构造，初始大小为10
+    public SeqStack() {
+        this(10);
+    }
+
+    // 用户指定栈的初始大小
+    public SeqStack(int size) {
+        this.stack=new int[size];
+        this.top=0;//当前栈中的元素个数
+    }
+
+    // 入栈操作,把val值加入栈
+    public void push(int val){
+        if(full()){
+            this.stack=Arrays.copyOf(this.stack,this.stack.length * 2);
+        }
+        this.stack[this.top]=val;
+        this.top++;
+    }
+
+    // 出栈，并把出栈的元素返回
+    public int pop() {
+        this.top--;
+        int val=this.stack[top];
+        return val;
+    }
+
+    // 返回栈顶元素
+    public int top(){
+        return this.stack[top-1];
+    }
+
+    // 判断栈空
+    public boolean empty(){
+        return this.top==0;
+    }
+
+    // 判断栈满
+    public boolean full(){
+        return this.stack.length==this.top;
+    }
+
+    // 返回栈元素的个数
+    public int size(){
+        //判断栈中元素是否为空
+        return this.top;
+    }
+
+    // 自定义栈元素的打印方式
+
+    public  String toString() {
+        String str=new String();
+        for(int i=0;i<this.top;i++){
+            str=str+this.stack[i]+" ";
+        }
+       return str;
+    }
+}
+
+public class SeqStackTest {
+    public static void main(String[] args) {
+        SeqStack s =new SeqStack();
+       for(int i=0;i<10;i++){
+           s.push(i+1);
+       }
+        System.out.println(s.size());//栈的长度10
+        System.out.println(s.toString());//打印栈1-10
+        System.out.println(s.top());//栈顶元素10-1
+
+        while (!s.empty()){
+            System.out.print(s.pop() + " ");  //逆序出栈
+        }
+        System.out.println();
+
+        System.out.println(s.size()); //出完栈后栈的长度为0
+
+    }
+}
