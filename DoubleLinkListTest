@@ -1,4 +1,8 @@
 //双向链表的增加、删除
+
+/**show方法有空指针异常：需要判断当前节点和它的下一个节点是否都为空
+ * @param <E>
+ */
 class DoubleLinkList<E>{
     protected Node<E> head;
     protected Node<E> tail;
@@ -29,6 +33,12 @@ class DoubleLinkList<E>{
          if (head==null){
              return false;
          }
+         if(head.next==null){
+             head=null;
+             tail=null;
+             return true;
+         }
+
          //如果删除的是第一个节点
          else if(head.data.equals(data)){
              head=head.next;
@@ -60,28 +70,46 @@ class DoubleLinkList<E>{
     //打印链表
     public void show(){
         Node<E> current=head;//定义一个current变量，将head指向current
-        while (current.next!=null){
+        while ( current!=null &&current.next!=null){ //需要判断当前节点和下一个都不为空的情况下才能打印链表
             System.out.print(current.data+" ");
             current= current.next;
         }
-        System.out.print(current.data);
+        if(head!=null){  //如果头结点不为空
+            System.out.print(current.data); //将最后一个节点打印
+        }else {
+            System.out.println("当前链表空！！");
+        }
         System.out.println();
     }
+//    public void show(){
+//        Node<E> current = head;
+//
+//        while(current != null){
+//            System.out.print(current.data+ " ");
+//            current = current.next;
+//        }
+//        System.out.println();
+//    }
 }
 public class DoubleLinkListTest {
     public static void main(String[] args) {
         DoubleLinkList<Integer> d=new DoubleLinkList<>();
         d.add(3);
         d.add(4);
-        d.add(5);
-        d.add(6);
-        d.add(7);
-        d.show(); //3 4 5 6 7
+        d.remove(3);
+        d.remove(4);
+        d.show();
 
-        System.out.println(d.remove(3));
-        System.out.println(d.remove(5));
-        System.out.println(d.remove(7));
-        System.out.println(d.remove(10));
-        d.show();//4 6
+//        System.out.println(d.remove(3));
+//        System.out.println(d.remove(5));
+//        System.out.println(d.remove(7));
+//        System.out.println(d.remove(10));
+//        d.show();
+
+     //链表为空后，再一次添加时，要求tail也置为null,再从开始添加
+      for(int i=0;i<4;i++) {
+          d.add(i+1);
+      }
+      d.show();
     }
 }
