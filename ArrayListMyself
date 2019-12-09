@@ -1,0 +1,77 @@
+package Lesson1;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+/**
+ * 自定义实现
+ * @param <T>
+ */
+public class ArrayListMyself <T>{
+    private Object[] elementData;//定义了一个数组
+    private int size;
+    public ArrayListMyself(int capacity){
+         elementData=(T[])new Object[capacity];
+    }
+    /**
+     * 添加值为value的元素
+     */
+    public boolean add(T value) {
+        if(full()){
+            Arrays.copyOf(elementData,elementData.length*2);
+        }
+        elementData[size++]=value;
+        return true;
+    }
+    public boolean full() {
+      return this.elementData.length==this.size();
+    }
+
+    /**
+     * 获取index号元素 ，返回元素的值
+     */
+    public T get(int index) {
+        if(index<0 || index>=size){
+            throw new IndexOutOfBoundsException("参数异常");
+        }
+        for (int i=0;i<elementData.length;i++){
+           if(i==index){
+               return (T)elementData[i];
+           }
+        }
+        return null;
+    }
+
+    /**
+     * 获取元素个数
+     */
+    public int size() {
+        return elementData.length;
+    }
+
+    /**
+     * 删除index号元素
+     */
+    public boolean remove(int index) {
+        if(index<0 ||index>size){
+            return false;
+        }else {
+            for (int i=index;i<size-1;i++){
+                elementData[i]=elementData[i+1];
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        ArrayListMyself my=new ArrayListMyself(2);
+        my.add(4);
+        my.add(5);
+        my.remove(1);
+        for (int i = 0; i <my.size() ; i++) {
+            System.out.print(my.get(i)+" ");
+
+        }
+
+    }
+
+}
