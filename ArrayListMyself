@@ -12,6 +12,9 @@ public class ArrayListMyself <T>{
     public ArrayListMyself(int capacity){
          elementData=(T[])new Object[capacity];
     }
+    public ArrayListMyself(){
+        this(2);
+    }
     /**
      * 添加值为value的元素
      */
@@ -23,14 +26,14 @@ public class ArrayListMyself <T>{
         return true;
     }
     public boolean full() {
-      return this.elementData.length==this.size();
+      return this.elementData.length==this.size;
     }
 
     /**
      * 获取index号元素 ，返回元素的值
      */
     public T get(int index) {
-        if(index<0 || index>=size){
+        if(index<0 || index>size){
             throw new IndexOutOfBoundsException("参数异常");
         }
         for (int i=0;i<elementData.length;i++){
@@ -39,13 +42,6 @@ public class ArrayListMyself <T>{
            }
         }
         return null;
-    }
-
-    /**
-     * 获取元素个数
-     */
-    public int size() {
-        return elementData.length;
     }
 
     /**
@@ -58,18 +54,29 @@ public class ArrayListMyself <T>{
             for (int i=index;i<size-1;i++){
                 elementData[i]=elementData[i+1];
             }
+            size--;
+
         }
         return true;
     }
 
     public static void main(String[] args) {
-        ArrayListMyself my=new ArrayListMyself(2);
+        ArrayListMyself my=new ArrayListMyself();
         my.add(4);
         my.add(5);
-        my.remove(1);
-        for (int i = 0; i <my.size() ; i++) {
-            System.out.print(my.get(i)+" ");
+        System.out.println(my.size);//2
+        System.out.println(my.elementData.length);//2
+        System.out.println(my.remove(1));//true
+        System.out.println(my.size);//1
+        System.out.println(my.remove(0));//true
+        System.out.println(my.size);//0
 
+        if (my.size!=0){
+           for (int i = 0; i <my.size; i++) {
+            System.out.print(my.get(i)+" ");
+          }
+        }else {
+            System.out.println("当前数组为空!");
         }
 
     }
