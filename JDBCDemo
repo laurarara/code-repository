@@ -1,0 +1,44 @@
+import java.sql.*;
+
+public class JDBCDemo {
+    public static void main(String[] args) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+ 
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/exercise", "root", "123456");
+
+
+            String sql1="select * from student where Ssex=?";
+
+            PreparedStatement statement1=connection.prepareStatement(sql1);
+            //分别传到服务器
+            statement1.setString(1,"n");
+    
+            ResultSet resultSet = statement1.executeQuery();
+
+            //对结果集的处理
+            System.out.println("SID:Sname:Ssex:Sage");
+            while (resultSet.next()) {
+                //boolean next() 判断返回结果集中是否还有数据
+                //指定属性名
+                String sid = resultSet.getString("SID");
+                String sname = resultSet.getString("Sname");
+                String ssex = resultSet.getString("Ssex");
+                String sage = resultSet.getString("Sage");
+                System.out.println(sid+":"+sname+":"+ssex+":"+sage);
+            }
+
+
+            //关闭资源
+            statement1.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
