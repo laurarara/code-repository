@@ -1,0 +1,47 @@
+package Exercise;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+
+/**
+ * 2020/1/7
+ * java.util.Iterator接口：迭代器（对集合元素进行遍历）
+ * E next 取出集合中的下一个元素
+ * boolean hasNext()判断集合中还有没有下一个元素
+ * Iterator迭代器是一个接口，无法直接使用，需要使用Iterator接口的实现类对象，获取该类的方法比较特殊
+ * Collection接口中有一个方法叫iterator(),返回的就是迭代器的实现类对象Iterator<E>  iterator
+ *
+ *   迭代器的使用步骤：
+ *   1.使用集合中的方法iterator()获取迭代器的实现类对象，使用iterator接口接收（多态）
+ *   2.hasNext()方法判断
+ *   3.next()方法取出集合中的下一个元素
+ */
+public class IteratorExample {
+    public static void main(String[] args) {
+       Collection<String> col=new ArrayList<>();
+        col.add("zhang");
+        col.add("zhao");
+        col.add("wang");
+        col.add("li");
+        col.add("hui");
+        //foreach可以遍历数组和集合元素
+//        for(String s:col){
+//            System.out.println(s);
+//        }
+        //多态的具体应用:基类引用，引用不同的派生类对象  public interface Collection<E> extends Iterable<E>
+        // 1.使用集合中的方法iterator()获取迭代器的实现类对象，使用iterator接口接收（多态）
+        //接口                     实现类对象
+       Iterator<String> iter = col.iterator();
+//        boolean b=iter.hasNext();
+//        System.out.println(b);
+//        String s=iter.next();
+//        System.out.println(s);//zhang
+//        2.hasNext()方法判断
+//        3.next()方法取出集合中的下一个元素
+        while(iter.hasNext()){
+            System.out.println(iter.next());
+        }
+
+    }
+}
