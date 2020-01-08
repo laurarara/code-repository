@@ -33,15 +33,40 @@ public class IteratorExample {
         // 1.使用集合中的方法iterator()获取迭代器的实现类对象，使用iterator接口接收（多态）
         //接口                     实现类对象
        Iterator<String> iter = col.iterator();
-//        boolean b=iter.hasNext();
-//        System.out.println(b);
-//        String s=iter.next();
-//        System.out.println(s);//zhang
-//        2.hasNext()方法判断
-//        3.next()方法取出集合中的下一个元素
         while(iter.hasNext()){
-            System.out.println(iter.next());
+            String i=iter.next();
+            System.out.print(i+" ");
+            if(i.equals("li")) {
+                iter.remove();
+            }
         }
+        System.out.println();
+        System.out.println("用迭代器删除元素后---");
 
+        Iterator<String> iter2 = col.iterator();
+        while(iter2.hasNext()){
+            System.out.print(iter2.next()+" ");
+        }
+        System.out.println();
+
+        ArrayList<Integer> arr=new ArrayList<>();
+        arr.add(1);
+        arr.add(2);
+        arr.add(3);
+        arr.add(4);
+        Iterator<Integer> it=arr.iterator();
+        while (it.hasNext()){
+            Integer a=it.next();
+            System.out.print(a+" ");
+            if(a == 2){
+                it.remove();
+            }
+        }
+        System.out.println();
+        Iterator<Integer> it2=arr.iterator();
+        while(it2.hasNext()){
+            Integer a=it2.next();
+            System.out.print(a+" ");
+        }
     }
 }
