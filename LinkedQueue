@@ -1,0 +1,59 @@
+package Exercise;
+
+public class LinkedQueue<T> {
+    private Entry<T> front;
+    private Entry<T> rear;
+    private int count;
+    public LinkedQueue(){
+        this.front=this.rear=new Entry<>(null,null);
+    }
+    class Entry<T>{
+        T data;
+        Entry<T> next;
+        public Entry(T data,Entry<T> next){
+            this.data=data;
+            this.next=next;
+        }
+    }
+    public void offer(T data){
+        Entry<T> node=new Entry<>(data,null);
+        this.rear.next=node;
+        this.rear=node;
+        this.count++;
+    }
+    public void poll(){
+        if(this.front.next!=null){
+        this.front.next=this.front.next.next;
+            if(this.front.next == null){
+                this.rear = this.front;
+            }
+            this.count--;
+        }
+    }
+    public int size(){
+        return this.count;
+    }
+    public T peek(){
+        return this.front.next.data;
+    }
+    public void show(){
+        Entry<T>  cur=this.front.next;
+        while (cur!=null){
+            System.out.print(cur.data+" ");
+            cur=cur.next;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        LinkedQueue l=new LinkedQueue();
+        for (int i = 0; i < 4; i++) {
+            l.offer(i);
+        }
+        l.show();
+        System.out.println("队头元素为:"+l.peek());
+        System.out.println("队列长度为："+l.size());
+        l.poll();
+        l.show();
+    }
+}
