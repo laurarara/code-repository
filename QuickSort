@@ -1,0 +1,47 @@
+package Exercise;
+import java.util.Arrays;
+
+/**
+ * 2020/1/10
+ */
+public class QuikSort {;
+    public static void main(String[] args) {
+        int[] a={2,5,7,1,3,9,4,8};
+        qSort(a);
+        System.out.println(Arrays.toString(a));
+    }
+    public static void qSort(int a[]){
+            qSort(a,0,a.length-1);
+    }
+    public static void qSort(int[] a,int left,int right){
+     if(left>=right){
+         return;
+     }
+     int pivot=a[(left+right)/2];
+     int index=partiton(a,left,right,pivot);
+        System.out.println("left:"+left+" right:"+right+" 下标是："+index+" 基准是："+pivot+" "+ Arrays.toString(a));
+     qSort(a,left,index-1);
+     qSort(a,index,right);
+    }
+    public static int partiton(int[] a,int left,int right,int pivot){
+        while (left<=right){
+            while (a[left]<pivot){
+                left++;
+            }
+            while (a[right]>pivot){
+                right--;
+            }
+            if (left<=right){
+                swap(a,left,right);
+                left++;right--;
+            }
+        }
+        return left;
+    }
+    public static void swap(int[] a,int l,int r){
+        int temp=a[l];
+        a[l]=a[r];
+        a[r]=temp;
+    }
+
+}
