@@ -1,0 +1,28 @@
+package Exercise;
+
+import java.util.Arrays;
+
+/**
+ * 从第一个值开始向前面插入，后面的数字插入时，前面的数字一定已经排好序了。找一个位置将这个数放入正确的位置
+ * 插入排序
+ * 2020/1/9
+ */
+public class TestInsertSort {
+    public static void main(String[] args) {
+        int[] a={19,3,56,8,55,89,1};
+        for(int i=0;i<a.length;i++){
+            //j从后往前判断，如果前面的数比它小，则交换，继续向前判断；
+            for(int j=i;j>0;j--){
+                if(a[j]<a[j-1]){
+                    int temp=a[j];
+                    a[j]=a[j-1];
+                    a[j-1]=temp;
+                }else {  //如果后面的比前面的值大，则跳出内层for循环，进行下一个数的判断
+                    break;
+                }
+            }
+            System.out.println("每"+i+"次的插入结果"+Arrays.toString(a));//因为第0次只有一个数，不能参与排序，所以依然是原数组
+        }
+        System.out.println(Arrays.toString(a));
+    }
+}
