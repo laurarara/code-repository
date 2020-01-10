@@ -1,0 +1,30 @@
+package Exercise;
+
+import java.util.Arrays;
+
+/**
+ * 选择排序
+ * 2020/1/10
+ */
+public class SelectSort {
+    public static void main(String[] args) {
+        int[] a={2,5,7,1,3,9,4,8};
+        selectSort(a);
+        System.out.println("排好序的数组为:"+Arrays.toString(a));
+    }
+    public static void selectSort(int[] a){
+        for(int i=0;i<a.length;i++){
+            for(int j=i+1;j<a.length;j++){
+                if(a[j]<a[i]){
+                    swap(a,i,j);
+                }
+            }
+            System.out.println("每"+(i+1)+"次的选择之后的结果："+Arrays.toString(a));
+        }
+    }
+    public static void swap(int[] a,int l,int r){
+        int temp=a[l];
+        a[l]=a[r];
+        a[r]=temp;
+    }
+}
