@@ -1,0 +1,32 @@
+package Exercise;
+
+import java.util.Arrays;
+
+/**
+ * 优化：定义一个flag变量，如果进入了if语句说明如果存在了交换，flag置为false;
+ * 如果一直都没有进入内层for循环的语句，说明已经排好序，不需要再次进行排序了；
+ * 2020/1/9
+ */
+public class TestBubbleSort {
+    public static void main(String[] args) {
+        int[] a={3,1,6,2,9,0,7,4,5,8};
+        int temp=0;
+        for(int i=0;i<a.length-1;i++){
+            //因为已经排好了i个了，所以只需要排length-i的数，-1是因为只需要排到倒数第二个，否则j+1会产生数组越界
+            boolean flag=true;
+            for(int j=0;j<a.length-1-i;j++){
+                if(a[j]>a[j+1]){
+                    temp=a[j];
+                    a[j]=a[j+1];
+                    a[j+1]=temp;
+                   flag=false;
+                }
+            }
+            if(flag){
+                System.out.println("排序结束！");
+                break;
+            }
+            System.out.println("第"+i+"次排序的结果"+Arrays.toString(a));
+        }
+    }
+}
