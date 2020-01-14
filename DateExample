@@ -1,7 +1,7 @@
 package Exercise;
 /**
  * 2020/1/12
- * 获取按照想要格式输出的时间
+ * 获取按照想要格式输出的时间以及集合元素的直接打印
  */
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
