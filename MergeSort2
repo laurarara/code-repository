@@ -1,0 +1,41 @@
+package Exercise;
+/**
+ * 2020/1/11  合并排序的递归
+ */
+import java.util.Arrays;
+public class MergeSort2 {
+    public static void main(String[] args) {
+        int[] a1={2,6,5,3,8,1};
+        System.out.println("原数组："+Arrays.toString(a1));
+        sort(a1,0,a1.length-1);
+        System.out.println("排序后的数组为："+Arrays.toString(a1));
+    }
+    public static void sort(int[] a,int left,int right){
+        if(left==right)return;
+        int middle=(left+right)/2;
+        sort(a,left,middle);
+        sort(a,middle+1,right);
+        merge(a,left,middle+1,right);
+    }
+    public static void merge(int[] a,int leftPtr,int rightPtr,int rightBound){
+        int mid=rightPtr-1;
+        int[] temp=new int[rightBound-leftPtr+1];
+        int i=leftPtr;
+        int j=rightPtr;
+        int index=0;
+        while (i<=mid&&j<=rightBound){
+            temp[index++]=a[i]<=a[j] ? a[i++]:a[j++];
+        }
+        while (i<=mid){
+            temp[index++]=a[i++];
+           // i++;index++;
+        }
+        while (j<=rightBound){
+            temp[index++]=a[j++];
+            //j++;index++;
+        }
+        for(int k=0;k<temp.length;k++){
+            a[k+leftPtr]=temp[k];
+        }
+    }
+}
