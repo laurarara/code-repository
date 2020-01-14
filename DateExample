@@ -1,0 +1,21 @@
+package Exercise;
+/**
+ * 2020/1/12
+ * 获取按照想要格式输出的时间
+ */
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+
+public class DateExample {
+    public static void main(String[] args) {
+        Collection c=new ArrayList();
+        c.add(2);
+        c.add(4);
+        System.out.println(c);
+        Date date=new Date();
+        SimpleDateFormat s=new SimpleDateFormat("yyy/MM/dd    hh:mm:ss");
+        System.out.println(s.format(date));
+    }
+}
