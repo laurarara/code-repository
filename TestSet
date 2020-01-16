@@ -1,0 +1,151 @@
+package Exercise2;
+
+import java.util.*;
+/**
+ * 2020/1/14.15.16
+ * Set接口，存储无序的、不可重复的元素,Set中常用的方法都是Collection下定义的
+ *  Set元素如何存储？使用哈希算法。
+ *  哈希算法：当向set中添加对象时，首先调用此对象所在类的hasCode()方法，计算此对象的hasCode值，此哈希值决定了此对象在set中的存储位置，
+ *  若此位置之前没有对象存储，则这个对象直接存到此位置；若此位置已有对象存储，再通过equals方法比较这两个对象是否相同，
+ *  如果相同，后一个对象就不能再添加进来；
+ *  万一返回false,要求hasCode方法要与equals方法一致；
+ *
+ * HashSet (主要实现类)
+ * LinkedHashSet
+ */
+public class TestSet {
+    public static void main(String[] args) throws Exception {
+       // testHashSet();
+        //testLikedHashSet();
+        testTreeSet3();
+    }
+
+    /**
+     * 1.向TreeSet添加的元素必须是同一个类的
+     * 2.可以按照添加进集合中的元素指定的顺序遍历，像String等包装类默认按照从小到大的顺序排列
+     * 3.当向TreeSet中添加自定义类型的对象时，有两种排序方法：自然排序、定制排序
+     * 4.自然排序：要求自定义类实现java.lang.Comparable,并重写compareTo方法，在此方法中，指明按照自定义类的哪个属性排序
+     * 5.向TreeSet中添加元素时，首先按照compareTo方法比较；一旦返回0，虽然仅是这两个对象的此属性值相同，
+     * 但是程序会认为这两个对象是相同的，进而后一个对象就不能添加进来。
+     *   所以：要保证compareTo方法和hasCode方法和equals方法保持一致!
+     */
+    public static void testTreeSet1() throws Exception {
+        Set s=new TreeSet();
+//        s.add(123);
+//        s.add(45);
+//        s.add("aa")
+         //当Person类没有实现Comparable接口时，不能实现比较
+        //Exception in thread "main" java.lang.ClassCastException: Exercise2.Person cannot be cast to java.lang.Comparable
+        s.add(new Person("aa",21));
+        s.add(new Person("bb",23));
+        s.add(new Person("cc",22));
+        s.add(new Person("dd",26));
+        s.add(new Person("ee",20));
+        s.add(new Person("ff",20));
+        Iterator i=s.iterator();
+        while (i.hasNext()){
+            System.out.print(i.next()+"  ");
+        }
+    }
+    public static void testTreeSet3(){
+        //直接向Set集合中添加匿名对象Comparator接口
+        TreeSet set=new TreeSet(new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                if(o1 instanceof Customer&&o2 instanceof Customer){
+                    Customer c1=(Customer)o1;
+                    Customer c2=(Customer)o2;
+                    int i= c1.getId().compareTo(c2.getId());
+                    if(i==0){
+                        return c1.getName().compareTo(c2.getName());
+                    }else {
+                        return i;
+                    }
+                }
+                return 0;
+            }
+        });
+        //3.向集合中添加Comparator接口中的涉及的类的对象（本次只能是Customer类）
+        set.add(new Customer("aa",1001));
+        set.add(new Customer("bb",1004));
+        set.add(new Customer("cc",1005));
+        set.add(new Customer("dd",1008));
+        set.add(new Customer("rr",1008));
+        Iterator i=set.iterator();
+        while (i.hasNext()){
+            System.out.print(i.next()+"  ");
+        }
+    }
+
+    /**
+     * 定制排序:实现 Comparator接口
+     */
+    public static void testTreeSet2(){
+        //1.向TreeSet中添加Custom类对象，指明是按照Custom哪个属性排序的
+        Comparator com=new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                if(o1 instanceof Customer&&o2 instanceof Customer){
+                    Customer c1=(Customer)o1;
+                    Customer c2=(Customer)o2;
+                    int i= c1.getId().compareTo(c2.getId());
+                    if(i==0){
+                        return c1.getName().compareTo(c2.getName());
+                    }else {
+                        return i;
+                    }
+                }
+                return 0;
+            }
+        };
+        //2.将此对象作为形参传递给TressSet构造器
+        TreeSet set=new TreeSet(com);
+        //3.向集合中添加Comparator接口中的涉及的类的对象（本次只能是Customer类）
+        set.add(new Customer("aa",1001));
+        set.add(new Customer("bb",1004));
+        set.add(new Customer("cc",1005));
+        set.add(new Customer("dd",1008));
+        set.add(new Customer("rr",1008));
+        Iterator i=set.iterator();
+        while (i.hasNext()){
+            System.out.print(i.next()+"  ");
+        }
+    }
+    public static void testLikedHashSet(){
+        Set s=new LinkedHashSet();
+        s.add(123);
+        s.add(45);
+        s.add("aa");
+        s.add(null);
+        Iterator i=s.iterator();
+        while (i.hasNext()){
+            System.out.print(i.next()+"  ");
+        }
+    }
+    /**
+     * 1.无序性！=随机性  （第一次随机出现，后面运行都是该序列）
+     * 2.无序性指的是元素在内存中存储的位置是无序的（离散的，不像List开辟一块空间存储）
+     * 3，不可重复性:向Set中添加相同的元素时，下一个相同的元素添加不进去;
+     *       注：要求添加进Ste元素的类，一定要重写equals和hashCode方法，进而保证Set元素的不可重复性
+     */
+    public static void testHashSet(){
+        Set s=new HashSet();
+        s.add(123);
+        s.add(45);
+        s.add("aa");
+        s.add(null);
+//        Person p1=new Person("laura",21);
+//        System.out.println("p1的hasCode:"+p1.hashCode());
+//        Person p2=new Person("laura",21);
+//        System.out.println("p2的hasCode:"+p2.hashCode());
+//        System.out.println(p1.equals(p2));
+        /**
+         * p1，p2指向不同的地址，所以都能添加进去
+         * 但是如果该类重写了equals和hashCode方法，并且属性的值都相同，那么即为相同对象
+         */
+//        s.add(p1);
+//        s.add(p2);
+        //System.out.println(s.size());
+        System.out.println(s);//重写了toString()方法
+    }
+}
