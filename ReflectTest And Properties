@@ -1,0 +1,32 @@
+package test;
+
+import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.util.Properties;
+
+public class ReflectTest {
+    public static void main(String[] args) throws Exception {
+        //提供一个模板（写一个框架类），可以创建任意类的对象，但是不能改变该类的对象的代码，但是不能改变框架的代码
+        //1.加载配置文件  1)创建pro对象  2).加载配置文件，转换为一个集合(  (1)获取class目录下的配置文件  (2)将配置文件用load加载进去)
+        Properties pro=new Properties();
+        ClassLoader classLoader=ReflectTest.class.getClassLoader();//将ReflectTest类加载进内存
+        InputStream is= classLoader.getResourceAsStream("pro.properties");//获取资源对应的字节流InputStream类型，将配置文件传进去
+        pro.load(is);//需要抛异常
+
+        //2.获取配置文件中定义的数据
+        String className=pro.getProperty("className");
+        String methodName=pro.getProperty("methodName");
+
+        //3.加载该类进内存
+        Class cls=Class.forName(className);
+        //4.创建对象
+        Object obj= cls.newInstance();
+        //5.获取方法对象
+        Method method=cls.getMethod(methodName);
+        //6.执行方法
+        method.invoke(obj,null);
+    }
+}
+pro.properties
+className=test.Person
+methodName=person2
