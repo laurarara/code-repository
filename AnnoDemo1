@@ -1,0 +1,23 @@
+package Annotation;
+/**
+ * @since 2020/1/20
+ */
+
+public class AnnoDemo1 {
+    @Override
+    public String toString(){
+        return super.toString();
+    }
+    @Deprecated
+    public void show1(){
+        //加了注解Deprecated后表示show1方法已过时
+    }
+    @SuppressWarnings("all")
+    public void show2(){
+        //show2方法替换show1
+    }
+    public void demo(){
+        show1();
+    }
+
+}
