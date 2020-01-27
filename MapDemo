@@ -1,0 +1,79 @@
+package MapTest;
+
+import java.util.*;
+
+public class MapDemo {
+    public static void main(String[] args) {
+       // show1();
+       // show2();
+        show3();
+    }
+
+    /**
+     * map集合的遍历
+     */
+    private static void show3() {
+        Map<String,Integer> map=new HashMap<>();
+        map.put("laura",20);
+        map.put("lili",22);
+        map.put("ning",23);
+        Set<String> set=map.keySet();//返回的就是一个存储map的key的Set集合
+       //set.add(map.keySet());
+        Iterator<String> i=set.iterator();
+        while (i.hasNext()){
+            String key=i.next();
+            Integer value=map.get(key);
+            System.out.println(key+"="+value);
+        }
+        System.out.println();
+        for (String s:set) {
+            Integer value=map.get(s);
+            System.out.println(s+"="+value);
+        }
+
+//        for(int i=0;i<map.size();i++){
+//            set2.add(map.get(i));
+//        }
+//        System.out.println(set2);
+
+    }
+
+    /**
+     * remove、get方法的测试案例  key存在，返回的是删除的value值；若不存在，返回null
+     */
+    private static void show2() {
+        Map<String,Integer> map=new HashMap<>();
+        map.put("laura",20);
+        map.put("lili",22);
+        map.put("ning",23);
+        System.out.println(map);
+        Integer i=map.remove("lili");//用Integer类型 接收，否则用int类型接收若不存在，会报空指针异常
+        System.out.println(map.remove("lily"));
+        System.out.println(i);
+        System.out.println(map);
+
+        System.out.println(map.get("ning"));//返回值23
+        System.out.println(map.containsKey("laura"));
+
+    }
+
+    /**
+     * put方法的测试案例
+     */
+    private static void show1() {
+        Map<String,String> map=new HashMap<>();
+        //key值不重复，返回nul
+        String s1=map.put("a","A");
+        System.out.println(s1);
+        //key值重复时，返回被替换的value值
+        String s2=map.put("a","B");
+        System.out.println(s2);
+        //此时集合中只有一个替换后的键值对
+        System.out.println(map);
+        //value值可以重复
+        map.put("c","C");
+        map.put("d","D");
+        map.put("e","D");
+        System.out.println(map);
+    }
+}
