@@ -1,0 +1,46 @@
+package MapTest;
+/**
+ * @since  2020/1/27
+ */
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+public class MapExercise {
+    public static void main(String[] args) {
+        Scanner s=new Scanner(System.in);
+        System.out.println("请输入字符串");
+        String a=s.next();
+//        for(int i=0;i<n;i++){
+//            a[i]=s.nextLine();
+//        }
+        Map<Character,Integer> map=new HashMap<>();
+        /**
+         * 遍历整个字符串数组，判断是否存在
+         */
+        for(char ch:a.toCharArray()) {
+            if (map.containsKey(ch)) {
+                Integer value =map.get(ch);
+                value++;
+                map.put(ch,value);
+            }else {
+                map.put(ch,1);
+            }
+        }
+        for (Character c:map.keySet()) {
+            Integer value=map.get(c);
+            System.out.println(c+"的个数是:"+value);
+        }
+    }
+    //        int numbera=0;
+//        int numberb=0;
+//        for(int i=0;i<a.length;i++) {
+//            if (a[i].equals("a")){
+//                numbera++;
+//            }else {
+//                numberb++;
+//            }
+//        }
+//        map.put("a",numbera);
+//        map.put("b",numberb);
+}
