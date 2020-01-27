@@ -1,0 +1,27 @@
+package MapTest;
+/**
+ * @since 2020/1/27
+ */
+import java.util.HashMap;
+import java.util.Hashtable;
+
+public class HashtableDemo {
+    public static void main(String[] args) {
+        /**
+         * 可以存放null值
+         */
+        HashMap<Integer,Integer> map=new HashMap<>();
+        map.put(null, 2);
+        map.put(3, null);
+        map.put(null, null);
+        System.out.println(map);
+        /**
+         * 存放含null的key或者value都会报  NullPointerException异常
+         */
+        Hashtable<Integer,Integer> table=new Hashtable<>();
+        table.put(null, 2);
+        table.put(3, null);
+        table.put(null, null);
+        System.out.println(table);
+    }
+}
