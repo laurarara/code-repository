@@ -1,0 +1,72 @@
+package JdbcExercise;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
+/**
+ * 2020/1/30
+ * 抽取jdbc常用的放在工具类里面
+ */
+public class JdbcUtils {
+    private static String url;
+    private static String user;
+    private static String password;
+    private static String driver;
+    /**
+     * 静态代码块负责读取配置文件获取数据库连接的各种参数，只读取一次
+     * Properties集合类来获取配置文件
+     */
+    static {
+        try {
+            Properties p=new Properties();
+            //方式一：加载文件(可能会因路径写错而报异常：FileNotFoundException)
+           // p.load(new FileReader("src/jdbc.properties"));
+
+            //方式二：获取src路径下的文件，标准方式-->获取ClassLoader类加载器
+            /**
+             * 步骤：先通过字节码文件获取class它的类加载器；sun.misc.Launcher$AppClassLoader@18b4aac2
+             * 通过该加载器获取它的文件名称资源,得到一个URL统一资源定位符；file:/C:/Users/laurarararararara/IdeaProjects/SqlTest/out/production/SqlTest/jdbc.properties
+             * 再通过getPath方法获取该文件的路径，得到一个String类型的地址；/C:/Users/laurarararararara/IdeaProjects/SqlTest/out/production/SqlTest/jdbc.properties
+             * load方法加载该地址。
+             */
+            ClassLoader classLoader = JdbcUtils.class.getClassLoader();
+            //System.out.println(classLoader);
+            URL resource = classLoader.getResource("jdbc.properties");
+            //System.out.println(resource);
+            String path = resource.getPath();
+            //System.out.println(path);
+            p.load(new FileReader(path));
+
+            //获取属性赋值
+            url=p.getProperty("url");
+            user=p.getProperty("user");
+            password=p.getProperty("password");
+            driver=p.getProperty("driver");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(url,user,password);
+    }
+    public static void close(Statement statement,Connection connection)  {
+        if(statement!=null){
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if(connection!=null){
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
