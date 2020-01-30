@@ -1,0 +1,49 @@
+package JdbcExercise;
+import domain.Student;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 2020/1/30
+ */
+public class JDBCDemo2 {
+    public static void main(String[] args) throws ClassNotFoundException {
+        List<Student> list=findAll();
+        System.out.println(list);
+        System.out.println(list.size());
+    }
+    public static List<Student> findAll() throws ClassNotFoundException {
+        List<Student> list=null;
+        Class.forName("com.mysql.jdbc.Driver");
+        try {
+            list = new ArrayList();
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/exercise", "root", "123456");
+            //String sql="insert into student values(9,'la',21,'n')";
+            // String sql="delete from student where Sid=20";
+            //String sql = "update student set Sage=20 where Sid=3";
+            String sql1 = "select * from student";
+            Statement statement = connection.createStatement();
+            //Integer rows = statement.executeUpdate(sql);
+            ResultSet resultSet = statement.executeQuery(sql1);
+            Student student = null;
+            while (resultSet.next()) {
+                int sid = resultSet.getInt(1);
+                String sname = resultSet.getString(2);
+                int age = resultSet.getInt(3);
+                String ssex = resultSet.getString(4);
+                //创建student对象
+                student = new Student();
+                student.setSid(sid);
+                student.setSname(sname);
+                student.setSage(age);
+                student.setSsex(ssex);
+                list.add(student);
+            }
+            statement.close();connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+}
