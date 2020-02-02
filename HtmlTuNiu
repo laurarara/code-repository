@@ -1,0 +1,140 @@
+<!--2020/2/2-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>旅游网</title>
+</head>
+<body>
+<table width="100%" align="center">
+    <!--td 标签 -- 代表HTML表格中的一个单元格 -->
+    <!--tr 标签 -- 代表HTML表格中的一行 -->
+    <tr>
+        <td>
+            <img src="1.png" width="100%" alt=" ">
+        </td>
+    </tr>
+    <!--第2行-->
+    <tr>
+        <td>
+            <img src="2.png" width="100%" alt=" ">
+        </td>
+    </tr>
+
+        <tr>
+            <td>
+                <table width="100%" align="center">
+                    <!--三个图需要在一行，所以放在一个tr-->
+                    <tr>
+                        <td>
+                            <!--图片过大的话需要用width=100%铺满整个网页-->
+                            <img src="3.png"  width="100%" alt=" ">
+                        </td>
+                        <td>
+                            <img src="4.png" width="100%" alt=" ">
+                        </td>
+                        <td>
+                            <img src="5.png" width="100%"  alt=" ">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    <!--文本链接-->
+    <tr>
+        <td>
+            <table width="100%" align="center">
+                <!--五个超链接，字体背景色改为黄色，集中，并且高度变高一点-->
+                <tr bgcolor="#ff8c00" align="center" height="45">
+                    <td>
+                        <a href="">超值热卖</a>
+                    </td>
+                    <td>
+                        <a href="">超级自由行</a>
+                    </td>
+                    <td>
+                        <a href="">旅游分期</a>
+                    </td>
+                    <td>
+                        <a href="">特价机票</a>
+                    </td>
+                    <td>
+                        <a href="">特价酒店</a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table align="center" width="95%">
+                <tr>
+                    <td>
+                        <img src="6.png">
+                    </td>
+                    <td>
+                        <img src="6.png">
+                    </td>
+                    <td>
+                        <img src="6.png">
+                    </td>
+                    <td>
+                        <img src="6.png">
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<font size="5%"><b>当季热玩</b></font>
+<hr color="red">
+<table width="100%" align="center">
+    <tr>
+        <td>
+            <table align="center" width="100%">
+                    <tr>
+                        <!--一个图片占两行-->
+                        <td rowspan="2">
+                        <img src="8.png">
+                    </td>
+                    <td>
+                        <!--人民币符号：&yen-->
+                        <img src="7.png" width="100%" alt=" "><br>
+                        <font color="red">&yen; 5999起</font>
+                    </td>
+                    <td>
+                        <img src="7.png" width="100%" alt=" "><br>
+                        <font color="red">&yen; 5999起</font>
+                    </td>
+                    <td>
+                        <img src="7.png" width="100%" alt=" "><br>
+                        <font color="red">&yen; 5999起</font>
+                    </td>
+                   </tr>
+                <tr>
+                    <td>
+                        <img src="7.png" width="100%" alt=" "><br>
+                        <font color="red">&yen; 5999起</font>
+                    </td>
+                    <td>
+                        <img src="7.png" width="100%" alt=" "><br>
+                        <font color="red">&yen; 5999起</font>
+                    </td>
+                    <td>
+                        <img src="7.png" width="100%" alt=" "><br>
+                        <font color="red">&yen; 5999起</font>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <font color="#808080" size="2" >Copyright &copy;2006-2020 南京途牛科技有限公司 Tuniu.com | 营业执照 | ICP证：苏B2-20130006 | 苏ICP备12009060号 | 北京旅游网</font>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
