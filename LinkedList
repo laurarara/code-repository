@@ -1,0 +1,49 @@
+package List;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+
+/**
+ * 大量操作首尾元素的方法：
+ *  void addFirst(E e) void addLast(E e)
+ *  E getFirst()    E getLast()
+ *  E removeFist() E removeLast()
+ *  E pop()   void push(E e)  boolean isEmpty()
+ *
+ */
+public class LinkedListDemo {
+    public static void main(String[] args) {
+        show1();
+    }
+
+    private static void show1() {
+        LinkedList<String> linkedList=new LinkedList();
+        linkedList.add("a");
+        linkedList.add("b");
+        linkedList.add("c");
+        System.out.println(linkedList);
+        //addFirst等效于push
+        linkedList.addFirst("begin");
+        System.out.println(linkedList);
+        linkedList.push("start");
+        System.out.println(linkedList);
+
+        //add类似于addLast
+        linkedList.addLast("last");
+
+        System.out.println(linkedList.getFirst());//得到第一个元素
+        System.out.println(linkedList.getLast());//得到最后一个元素
+        //removeFirst( )相当于pop( )
+        System.out.println("第一个元素："+linkedList.removeFirst());//删除第一个元素
+        System.out.println("最后一个元素："+linkedList.removeLast());//删除最后一个元素
+        //迭代器遍历集合
+        Iterator<String> i=linkedList.iterator();
+        while (i.hasNext()){
+            System.out.print(i.next()+"   ");
+        }
+        System.out.println();
+        System.out.println(linkedList.isEmpty());
+        linkedList.clear();//清空链表
+        System.out.println(linkedList.isEmpty());
+    }
+}
