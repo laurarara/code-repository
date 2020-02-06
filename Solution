@@ -1,0 +1,47 @@
+package Simple;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+/**
+ * 2020/2/6
+ * LeetCode简单题型，数组的两个数之和问题
+ */
+class Solution {
+    public static void main(String[] args) {
+        int[] a={2,7,11,15};
+        int[] b=twoSum(a,18);
+        System.out.println(Arrays.toString(b));
+        int[] c=twoSum2(a,18);
+        System.out.println(Arrays.toString(c));
+    }
+    //自己写的简单方法，如果没有两个数，异常处理
+    public static int[] twoSum(int[] nums, int target) {
+        for(int i=0;i<nums.length;i++){
+            for(int j=i+1;j<nums.length;j++){
+                if (nums[j] == target - nums[i]) {
+                    return new int[] { i, j };
+                }
+ //               int[]a =new int[2];
+//                if(nums[i]+nums[j]==target){
+//                    a[0]=i;
+//                    a[1]=j;
+//                }
+            }
+        }
+        throw  new IllegalArgumentException("No two sum value");
+    }
+    //力扣大神Map集合，如果这个集合中包含target-第一个数，那么就存入map集合
+    public static int[] twoSum2(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<> ();
+        /*每遍历一次num数组，就把该数组对应的数值以及下标存入map
+          如果该map集合中有相减之后的数，就把那个数的下标与当前数的下标返回新数组
+         */
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i])) {
+                return new int[]{map.get(target - nums[i]), i};
+            }
+            map.put(nums[i], i);
+        }
+        throw new IllegalArgumentException("No two sum value");
+    }
+}
