@@ -1,0 +1,43 @@
+package XmlDemo.jsoup;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+
+/**
+ * Jsoup的parse方法、Document的getElementsByAttributeValue方法
+ * attr方法、text方法
+ * 2020/2/9
+ */
+public class JsoupDemo2 {
+    public static void main(String[] args) throws IOException {
+        //Document parse(URL url, int timeoutMillis),用过网络路径获取指定的xml或html文档对象（爬虫：比价网）
+        //timeoutMillis超时时间
+//        URL url=new URL("https://github.com/");
+//        Document document = Jsoup.parse(url, 1000);
+//        System.out.println(document);
+        String path = JsoupDemo1.class.getClassLoader().getResource("student.xml").getPath();
+        Document document1 = Jsoup.parse(new File(path), "utf-8");
+        //获取number为s001的元素对象,Elements getElementsByAttributeValue(String key, String value)  属性名，属性值
+        document1.getElementsByAttributeValue("number","s001");
+        System.out.println("--------------");
+        //通过Elements获取子标签对象 getElementsByTag方法
+        Element element = document1.getElementsByTag("student").get(0);
+        System.out.println(element);
+        Elements name = element.getElementsByTag("name");
+        System.out.println(name);
+        System.out.println("--------------");
+        //获取student对象的属性值  attr方法
+        String numebr = element.attr("number");
+        System.out.println(numebr);
+        System.out.println("--------------");
+        //获取文本内容
+        System.out.println(name.text());//获取含有子标签的纯文本内容
+        System.out.println("--------------");
+        System.out.println(name.html());//获取含有子标签的纯html
+    }
+}
