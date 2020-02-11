@@ -1,0 +1,31 @@
+package RequestDemo;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
+ * 演示Request获取请求行数据
+ * 可以直接new Servlet,会直接注解配置，重写doPost和doGet
+ */
+@WebServlet("/ReqDemo")
+public class ReqDemo extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //获取虚拟目录 /ServletConfig
+        String contextPath = request.getContextPath();
+        System.out.println(contextPath);
+        //获取请求URI  /ServletConfig/ReqDemo
+        String requestURI = request.getRequestURI();
+        System.out.println(requestURI);
+        //URL:http://localhost:8080/ServletConfig/ReqDemo
+        StringBuffer requestURL = request.getRequestURL();
+        System.out.println(requestURL);
+    }
+}
+
