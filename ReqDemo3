@@ -1,0 +1,50 @@
+package RequestDemo;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.Map;
+import java.util.Set;
+//常见的request方法
+@WebServlet("/ReqDemo3")
+public class ReqDemo3 extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //获取请求体的请求参数
+//        //获取字节流
+//        BufferedReader reader = request.getReader();
+//        //读取数据
+//        String line=null;
+//        while ((line=reader.readLine())!=null) {
+//            System.out.println(reader.readLine());
+//        }
+        //获取参数
+        String username = request.getParameter("username");
+        System.out.println(username);
+
+        //获取的是复选框勾选的值
+        String[] parameterValues = request.getParameterValues("hobby");
+        System.out.println(Arrays.toString(parameterValues));
+
+        //获取参数的map集合
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        Set<String> strings = parameterMap.keySet();
+        for (String  name:strings) {
+            System.out.print(name+"  ");
+            //防止复选框的属性有多个值，所以应该用数组存储；不能用getParameter，否则只能获取复选框的一个属性
+            String[] values = parameterMap.get(name);
+            System.out.println(Arrays.toString(values));
+            System.out.println("--------");
+        }
+
+    }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //get获取
+        //两种方法通过getParameter方法都可以获取，所以只需要写一份，通过另一个方法调用
+        this.doPost(request,response);
+    }
+}
