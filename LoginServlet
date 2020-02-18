@@ -1,0 +1,51 @@
+package Servlet;
+import UserDao.JdbcTemplateDemo;
+import UserDao.User;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Map;
+
+@WebServlet("/Login2/loginServlet")
+public class loginServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        //比较提交的验证码和Session里面的验证码
+        String checkCode = request.getParameter("checkCode");
+        HttpSession session = request.getSession();
+        String checkCode_session = (String)session.getAttribute("checkCode_session");
+        session.removeAttribute("checkCode_session");
+        //提交的账号密码
+        User user=new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        //从数据库中获取的User对象与html输入的账号密码比较；不一样会返回null
+        JdbcTemplateDemo jdbc=new JdbcTemplateDemo();
+        User user1 = jdbc.queryDemo(user);
+        //判断验证码,忽略大小写
+        if(checkCode_session!=null && checkCode_session.equalsIgnoreCase(checkCode) ){
+            //验证码正确判断用户名密码,查询数据库
+            if(user1==null){//登录失败，转发至新页面
+                request.setAttribute("login_error","用户名或密码错误");
+                request.getRequestDispatcher("/login2.jsp").forward(request,response);
+            }else {
+                //存储用户信息
+                session.setAttribute("user1",username);
+                response.sendRedirect(request.getContextPath()+"/success.jsp");
+            }
+        }else {
+            request.setAttribute("c_error","验证码错误");
+            request.getRequestDispatcher("/login2.jsp").forward(request,response);
+        }
+    }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        this.doPost(request, response);
+    }
+}
