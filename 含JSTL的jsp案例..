@@ -1,0 +1,42 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="ELandJSTL.User" %><%--
+  Created by IntelliJ IDEA.
+  User: laurarararararara
+  Date: 2020/2/19
+  Time: 21:16
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>案例</title>
+</head>
+<body>
+<%
+    List list=new ArrayList();
+    list.add(new User("laura",22,new Date()));
+    list.add(new User("lily",23,new Date()));
+    list.add(new User("ning",21,new Date()));
+    request.setAttribute("list",list);
+%>
+<table border="1" align="center">
+    <tr bgcolor="#ffc0cb">
+        <th>学号</th>
+        <th>姓名</th>
+        <th>年龄</th>
+        <th>生日</th>
+    </tr>
+    <c:forEach items="${list}" var="user" varStatus="s">
+        <tr bgcolor="#ffc0cb">
+            <td>${s.count}</td>
+            <td>${user.name}</td>
+            <td>${user.age}</td>
+            <td>${user.bir}</td>
+        </tr>
+    </c:forEach>
+</table>
+</body>
+</html>
