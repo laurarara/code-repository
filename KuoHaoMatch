@@ -1,0 +1,38 @@
+ public static void main(String[] args) {
+        char[] c={'{','(',')','}','[',']'};
+        char[] c2={'}','['};
+        char[] c3={'{','[','}',']'};
+        System.out.println(match(c));
+        System.out.println(match(c2));
+        System.out.println(match(c3));
+    }
+    public static boolean match(char[] ch) {
+        if (ch.length % 2 == 1 || ch[0]=='}' || ch[0]==']' || ch[0]==')') {
+            return false;
+        }
+        Stack stack = new Stack();
+        for (int i = 0; i < ch.length; i++) {
+            if (ch[i] == '[' || ch[i] == '(' || ch[i] == '{') {
+                stack.push(ch[i]);
+            } else {
+                char c=(char) stack.peek();
+                if(match2(c, ch[i])){
+                    stack.pop();
+                }else {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+        public static boolean match2(char c,char c2){
+        if(c=='{' && c2=='}'){
+            return true;
+        } else if(c=='[' && c2==']') {
+            return true;
+        } else if(c=='(' && c2==')'){
+            return true;
+        } else {
+                return false;
+            }
+        }
