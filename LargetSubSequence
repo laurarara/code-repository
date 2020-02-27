@@ -1,0 +1,49 @@
+package Simple;
+
+/**
+ * 最长公共子序列
+ * 2020/2/27
+ */
+public class LargetSubSequence {
+    public static void main(String[] args) {
+        int[] a={-2,3,-1,1,-3};
+        System.out.println(maxSubArray(a));
+        int[] b={-2,3,-1,1,3};
+        System.out.println(maxSubArray(b));
+        int[] c={2,3,-1,1,-3};
+        System.out.println(maxSubArray(c));
+        int[] d={-2,-3,-1,-1,-3};
+        System.out.println(maxSubArray(d));
+    }
+
+    /**
+     * 动态规划的是首先对数组进行遍历，当前最大连续子序列和为 sum，结果为 ans
+     * 如果 sum > 0，则说明 sum 对结果有增益效果，则 sum 保留并加上当前遍历数字
+     * 如果 sum <= 0，则说明 sum 对结果无增益效果，需要舍弃，则 sum 直接更新为当前遍历数字
+     * 每次比较 sum 和 ans的大小，将最大值置为ans，遍历结束返回结果
+     * 时间复杂度：O(n)
+     * @param nums
+     * @return
+     */
+        public static int maxSubArray(int[] nums) {
+            int ans = nums[0];
+            int sum = 0;
+            //遍历数组，如果当前的和加上新的数据之后>0,就加上；比较sum和ans
+            /**
+             * sum=0;sum=-2;ans=0;(不加第一个数)
+             * sum=3;ans=3;(加上第二个数)
+             * sum=2,ans=3;(加上第三个数后)
+             * sum=3,ans=3;(第四个数)
+             * sum=0;ans=3;(不加上第五个数)
+             */
+            for(int i=0;i<nums.length;i++) {
+                if(sum > 0) {
+                    sum += nums[i];
+                } else {
+                    sum = nums[i];
+                }
+                ans = Math.max(ans, sum);
+            }
+            return ans;
+        }
+    }
