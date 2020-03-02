@@ -1,0 +1,30 @@
+package Simple;
+/**
+ * 最后一个单词长度
+ * 2020/3/2
+ * 排除最后一个是空格的情况
+ */
+public class LastWordLength {
+    public static void main(String[] args) {
+        System.out.println(lastWord("hello hello "));
+        System.out.println(lastWord("hello hello"));
+        System.out.println(lastWord("hello hello st"));
+        System.out.println(lastWord("da"));
+        System.out.println(lastWord(""));
+    }
+    public static int  lastWord(String s){
+//        if(s.length()==0){
+//            return 0;
+//        }
+        int end=s.length()-1;
+        while (end>=0 && s.charAt(end)==' '){
+            end--;
+        }
+        int start=end;//不是空格的位置
+        //start遇到空格后就说明单词结束
+        while (start>=0 && s.charAt(start)!=' '){
+            start--;
+        }
+        return end-start;
+    }
+}
